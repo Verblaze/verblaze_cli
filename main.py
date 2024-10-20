@@ -1,7 +1,8 @@
 import argparse
 import os
 import re
-
+import json
+import string
 # Get actual path of the project   
 def get_actual_path(template:str):
     if template == "flutter":
@@ -62,11 +63,62 @@ def extract_strings_from_dart_file(file_path):
     # Elde edilen tuple'lardan stringleri al
     strings = [s[0] if s[0] else s[1] for s in matches]
     
-    # 'package:' ile başlayan stringleri listeden kaldır
-    strings = [s for s in strings if not s.startswith("package:") and not s.startswith("http:") and not s.startswith("https:") and not s.startswith("dart:") and not s.startswith("mailto:") and not s.startswith("tel:") and not s.startswith("sms:") and not s.startswith("print(") and not s.startswith("debugPrint(")]    
+    # Önemli Stringleri almak için aşağıdaki stringleri temizle
+    strings = [s for s in strings if not s.startswith("package:") and not s.startswith("http:") and not s.startswith("https:") and not s.startswith("dart:") 
+               and not s.startswith("mailto:") and not s.startswith("tel:") and not s.startswith("sms:") and not s.startswith("print(") and not s.startswith("debugPrint(") 
+               and not s.startswith("log(") and not s.startswith("assert(") and not s.startswith("throw(") and not s.startswith("Uri.parse(") and not s.startswith("RegExp(")
+               and not s.startswith("RegExp.escape(") and not s.startswith("RegExp.quote(") and not s.startswith("RegExp.unescape(") and not s.startswith("RegExp.compile(")
+               and not s.startswith("RegExp.hasMatch(") and not s.startswith("RegExp.firstMatch(") and not s.startswith("RegExp.allMatches(") and not s.startswith("RegExp.stringMatch(")
+               and not s.startswith("RegExp.replaceAll(") and not s.startswith("RegExp.replaceFirst(") and not s.startswith("RegExp.split(") and not s.startswith("RegExp.matchAsPrefix(")
+               and not s.startswith("RegExp.matchAsPrefix(") and not s.startswith("RegExp.matchAsPrefix(") and not s.startswith("RegExp.matchAsPrefix(") and not s.startswith("RegExp.matchAsPrefix(")
+               and not s.startswith("../") and not s.startswith("RegExp.matchAsPrefix(") and not s.startswith("RegExp.matchAsPrefix(") and not s.startswith("RegExp.matchAsPrefix(")]    
     
     return strings    
 
+def remove_emojis_and_punctuation(text):
+    # Emojileri kaldırmak için Unicode aralığını tanımla
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # Yüz emojileri
+        "\U0001F300-\U0001F5FF"  # Simgeler ve objeler
+        "\U0001F680-\U0001F6FF"  # Taşıtlar ve simgeler
+        "\U0001F1E0-\U0001F1FF"  # Bayraklar
+        "]+", flags=re.UNICODE)
+
+    # Noktalama işaretlerini kaldırmak için string.punctuation'ı kullan
+    no_punctuation = text.translate(str.maketrans("", "", string.punctuation))
+    
+    # Emojileri kaldır
+    no_emoji = emoji_pattern.sub(r'', no_punctuation)
+    
+    return no_emoji.strip()
+
+def format_as_json(file_path_and_strings : list) -> str:
+    data = []
+    for file_path, strings in file_path_and_strings:
+        basename = os.path.basename(file_path)
+        # First characters should be upper Ex: Settings Screen
+        file_title =  (basename.split(".")[0].replace("_", " ")).title()
+        # Generate a key for every string value and create "values" dict
+        values = {}
+        for string in strings:
+            key = ""
+            cleaned_text = remove_emojis_and_punctuation(string)
+            words = cleaned_text.split(" ")
+            # If string has more than 3 words, key will be first two words and last word
+            if len(words) >= 3:
+                middle_word = words[len(words) // 2]
+                key = (words[0] + "_" + middle_word + "_" + words[-1]).lower()
+                values[key] = string
+            elif len(words) == 2:
+                key = (words[0] + "_" + words[1]).lower()
+                values[key] = string
+            else: 
+                key = string.lower()
+                values[key] = string
+        if values:
+            data.append({"file_title" : file_title, "values": values})
+    return json.dumps(data)
 
 def main():
     parser = argparse.ArgumentParser("Auto-Localization Generation Tool")
@@ -85,12 +137,9 @@ def main():
         file_path_and_strings.append((file_path, strings))
     # print file_path_and_strings to output.txt
     
-    with open("output.txt", "w") as file:
-        for file_path, strings in file_path_and_strings:
-            file.write(f"{file_path}\n")
-            for string in strings:
-                file.write(f"{string}\n")
-            file.write("\n")        
-
+    with open("output.json", "w") as file:
+        formatted_data : dict = format_as_json(file_path_and_strings)
+        file.write(formatted_data)
+        
 if __name__ == "__main__":
     main()
