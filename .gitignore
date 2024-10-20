@@ -166,3 +166,4 @@ verblaze_cli/
 
 # Output file
 output.txt
+output.json

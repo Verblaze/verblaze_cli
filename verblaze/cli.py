@@ -1,8 +1,12 @@
-import argparse
 import os
 import re
 import json
 import string
+import sys
+import time
+
+import click
+from termcolor import colored
 # Get actual path of the project   
 def get_actual_path(template:str):
     if template == "flutter":
@@ -44,7 +48,6 @@ def list_all_files_in_directory(dir: str, template: str, folders: list):
                 if file.endswith(f".{valid_file_extension}"):
                     # Tam dosya yolunu ekliyoruz
                     file_path = os.path.join(root, file)
-                    print(file_path)
                     all_files.append(file_path)
     
     return all_files
@@ -94,6 +97,7 @@ def remove_emojis_and_punctuation(text):
     return no_emoji.strip()
 
 def format_as_json(file_path_and_strings : list) -> str:
+    
     data = []
     for file_path, strings in file_path_and_strings:
         basename = os.path.basename(file_path)
@@ -120,26 +124,62 @@ def format_as_json(file_path_and_strings : list) -> str:
             data.append({"file_title" : file_title, "values": values})
     return json.dumps(data)
 
-def main():
-    parser = argparse.ArgumentParser("Auto-Localization Generation Tool")
-    parser.add_argument("-t", type=str, help="Enter the technology in which you developed your project: flutter, react-native, react, angular, plain-html")
-    parser.add_argument("-d", type=str, help="Directory of project. Example: -d '/Users/username/Projects/MyProject'")
-    parser.add_argument("-f", type=str, help="Folders containing UI codes. Example: -f 'screens, components, widgets'")
-    args = parser.parse_args()
-    selected_template = args.t
-    project_dir = args.d
-    folders = args.f.split(", ")
+def colored_custom(text, r, g, b):
+    return f"\033[38;2;{r};{g};{b}m{text}\033[0m"
+
+def print_ascii_art(): 
+    ascii_art = [
+    "                    _      _                        ___   __   _____ ",
+    " /\   /\ ___  _ __ | |__  | |  __ _  ____ ___      / __\\ / /   \\_   \\",
+    " \\ \\ / // _ \\| '__|| '_ \\ | | / _` ||_  // _ \\    / /   / /     / /\\/ ",
+    "  \\ V /|  __/| |   | |_) || || (_| | / /|  __/   / /___/ /___/\\/ /_  ",
+    "   \\_/  \\___||_|   |_.__/ |_| \\__,_|/___|\\___|   \\____/\\____/\\____/  ",
+    "                                                                     "
+    ]
+
+    for line in ascii_art:
+        print(colored_custom(line, 79, 70, 229))        
+
+def loading_animation():
+    timer = 0
+    loading = "Output.json Generating: [----------]"
+    backtrack = '\b'*len(loading)
+
+    while timer < 11:
+        sys.stdout.write(backtrack + loading)
+        sys.stdout.flush()
+        loading = loading.replace("-","=",1)
+        time.sleep(0.5)
+        timer += 1
+        time.sleep(0.5)
+        sys.stdout.write(backtrack)
+
+
+@click.command()
+@click.option("-t", type=str, help="Enter the technology in which you developed your project: flutter, react-native, react, angular, plain-html \n")
+@click.option("-d", type=str, help="Directory of project. Example: -d '/Users/username/Projects/MyProject'\n")
+@click.option("-f", type=str, help="Folders containing UI codes. Example: -f 'src, app, screens, view, views, components, widgets, widget' \n")
+def main(t, d, f):
+    loading_animation()
+    print_ascii_art()
+    """ Verblaze: Auto-Localization Generation Tool """
+    selected_template = t
+    project_dir = d
+    if not project_dir.endswith("/"):
+        project_dir += "/"
+    folders = f.split(", ")
     actual_path = get_actual_path(selected_template)# Actual path of the project such as /lib for flutter, /src for react, /src/app for angular, /src for react-native, / for plain-html
-    file_list = list_all_files_in_directory("{}{}".format(project_dir, actual_path), selected_template, folders)    
+    file_list = list_all_files_in_directory("{}{}".format(project_dir, actual_path), selected_template, folders)  
     file_path_and_strings = []
     for file_path in file_list:
         strings = extract_strings_from_dart_file(file_path)
         file_path_and_strings.append((file_path, strings))
     # print file_path_and_strings to output.txt
-    
-    with open("output.json", "w") as file:
+    current_path = os.getcwd()
+    with open(current_path + "/output.json", "w") as file:
         formatted_data : dict = format_as_json(file_path_and_strings)
         file.write(formatted_data)
+        print(colored("\n\n {}/output.json file is created successfully!".format(current_path), "green"))
         
 if __name__ == "__main__":
     main()
