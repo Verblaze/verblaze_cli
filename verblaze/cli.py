@@ -12,7 +12,7 @@ from .display_utils import print_ascii_art, loading_animation
 SUPPORTED_TEMPLATES = [
     "flutter", "react", "react-native", "angular", "plain-html",
     "vue", "svelte", "ember", "backbone", "swift", "kotlin",
-    "javafx", "wpf", "qt", "blazor"
+    "javafx", "wpf", "qt", "blazor", "nextjs"
 ]
 
 @click.command()

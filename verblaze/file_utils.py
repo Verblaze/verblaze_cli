@@ -23,6 +23,7 @@ def get_actual_path(template: str):
         "wpf": "src",
         "qt": "src",
         "blazor": "Pages",
+        "nextjs": "pages",
     }
     return actual_paths.get(template, "")
 
@@ -46,6 +47,7 @@ def get_file_extension_from_template(template: str):
         "wpf": ("xaml",),
         "qt": ("qml",),
         "blazor": ("razor",),
+        "nextjs": ("jsx", "tsx", "js", "ts"),
     }
     return extensions.get(template, ())
 
