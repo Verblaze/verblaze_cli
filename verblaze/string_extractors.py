@@ -1,7 +1,6 @@
 # string_extractors.py
 
 import re
-import os
 import string
 
 class BaseStringExtractor:
@@ -106,6 +105,60 @@ class ReactStringExtractor(BaseStringExtractor):
                 strings.append(match[1].strip())
 
         # Handle template literals with expressions (e.g., `Hello, ${user.name}!`)
+        template_literal_pattern = re.compile(
+            r"`([^`]*?)`"
+        )
+        template_matches = re.findall(template_literal_pattern, code)
+        for tpl in template_matches:
+            # Remove embedded expressions
+            clean_tpl = re.sub(r"\${[^}]+}", "", tpl).strip()
+            if clean_tpl:
+                strings.append(clean_tpl)
+
+        # Filter out unwanted strings
+        prefixes_to_ignore = [
+            "import ", "require(", "console.log(", "http:", "https:", "mailto:", "tel:", "sms:",
+            "../", "./", "export ", "function", "const ", "let ", "var ", "{", "}", "return "
+        ]
+
+        # Remove duplicates and filter
+        unique_strings = set()
+        for s in strings:
+            if not any(s.startswith(prefix) for prefix in prefixes_to_ignore) and len(s) > 0:
+                unique_strings.add(s)
+
+        return list(unique_strings)
+    
+@register_extractor("nextjs")
+class NextJsStringExtractor(BaseStringExtractor):
+    """
+    Extracts strings from Next.js (.js, .jsx, .ts, .tsx) files.
+    """
+    def extract_strings(self):
+        with open(self.file_path, 'r', encoding='utf-8') as file:
+            code = file.read()
+
+        # Capture strings in JSX text nodes and specific attributes
+        jsx_string_pattern = re.compile(
+            r"""
+            # Capture strings within JSX tags (e.g., <div>Hello World</div>)
+            (?:>([^<>{}]+)<)|
+            # Capture strings within specific JSX attributes (e.g., alt="description")
+            (?:(?:alt|title|placeholder|aria-label|label)=["']([^"']+)["'])
+            """,
+            re.VERBOSE
+        )
+
+        matches = re.findall(jsx_string_pattern, code)
+        strings = []
+
+        for match in matches:
+            if match[0]:
+                strings.append(match[0].strip())
+            if match[1]:
+                strings.append(match[1].strip())
+
+        # Handle template literals with expressions
         template_literal_pattern = re.compile(
             r"`([^`]*?)`"
         )
@@ -385,6 +438,60 @@ class EmberStringExtractor(BaseStringExtractor):
 
         return list(unique_strings)
 
+@register_extractor("nextjs")
+class NextJsStringExtractor(BaseStringExtractor):
+    """
+    Extracts strings from Next.js (.js, .jsx, .ts, .tsx) files.
+    """
+    def extract_strings(self):
+        with open(self.file_path, 'r', encoding='utf-8') as file:
+            code = file.read()
+
+        # Capture strings in JSX text nodes and specific attributes
+        jsx_string_pattern = re.compile(
+            r"""
+            # Capture strings within JSX tags (e.g., <div>Hello World</div>)
+            (?:>([^<>{}]+)<)|
+            # Capture strings within specific JSX attributes (e.g., alt="description")
+            (?:(?:alt|title|placeholder|aria-label|label)=["']([^"']+)["'])
+            """,
+            re.VERBOSE
+        )
+
+        matches = re.findall(jsx_string_pattern, code)
+        strings = []
+
+        for match in matches:
+            if match[0]:
+                strings.append(match[0].strip())
+            if match[1]:
+                strings.append(match[1].strip())
+
+        # Handle template literals with expressions
+        template_literal_pattern = re.compile(
+            r"`([^`]*?)`"
+        )
+        template_matches = re.findall(template_literal_pattern, code)
+        for tpl in template_matches:
+            # Remove embedded expressions
+            clean_tpl = re.sub(r"\${[^}]+}", "", tpl).strip()
+            if clean_tpl:
+                strings.append(clean_tpl)
+
+        # Filter out unwanted strings
+        prefixes_to_ignore = [
+            "import ", "require(", "console.log(", "http:", "https:", "mailto:", "tel:", "sms:",
+            "../", "./", "export ", "function", "const ", "let ", "var ", "{", "}", "return "
+        ]
+
+        # Remove duplicates and filter
+        unique_strings = set()
+        for s in strings:
+            if not any(s.startswith(prefix) for prefix in prefixes_to_ignore) and len(s) > 0:
+                unique_strings.add(s)
+
+        return list(unique_strings)
+    
 @register_extractor("backbone")
 class BackboneStringExtractor(BaseStringExtractor):
     """
