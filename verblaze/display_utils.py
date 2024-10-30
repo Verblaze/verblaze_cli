@@ -1,5 +1,6 @@
 # display_utils.py
 
+import os
 import sys
 import time
 
@@ -13,6 +14,7 @@ def print_ascii_art():
     """
     Prints the ASCII art logo of Verblaze.
     """
+    os.system('clear')
     ascii_art = [
         "                    _      _                        ___   __   _____ ",
         " /\\   /\\ ___  _ __ | |__  | |  __ _  ____ ___      / __\\ / /   \\_   \\",
@@ -28,9 +30,9 @@ def loading_animation():
     """
     Displays a simple loading animation in the console.
     """
-    loading = "Output.json Generating: [----------]"
+    loading = "Strings are being extracted: [----------]"
     for i in range(10):
-        progress = loading[:24] + "=" * i + "-" * (10 - i) + "]"
+        progress = loading[:29] + "=" * i + "-" * (10 - i) + "]"
         sys.stdout.write('\r' + progress)
         sys.stdout.flush()
         time.sleep(0.5)

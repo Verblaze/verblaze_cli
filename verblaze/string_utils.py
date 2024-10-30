@@ -4,6 +4,7 @@ import re
 import json
 import os
 import string
+from unidecode import unidecode
 
 def remove_emojis_and_punctuation(text):
     """
@@ -36,6 +37,9 @@ def format_as_json(file_path_and_strings: list) -> str:
         basename = os.path.basename(file_path)
         # First characters should be uppercase, e.g., "Settings Screen"
         file_title = (basename.split(".")[0].replace("_", " ")).title()
+        file_key = unidecode(file_title).replace(" ", "_").lower()
+        # file_key has contains english characters only
+        
         # Generate a key for every string value and create "values" dict
         values = {}
         for string in strings:
@@ -53,5 +57,5 @@ def format_as_json(file_path_and_strings: list) -> str:
             key = key.replace(" ", "_")
             values[key] = string
         if values:
-            data.append({"file_title": file_title, "values": values})
+            data.append({"file_title": file_title, "file_key" : file_key, "values": values})
     return json.dumps(data, ensure_ascii=False, indent=2)
