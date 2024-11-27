@@ -1,0 +1,424 @@
+[
+  {
+    "file_title": "Home View",
+    "file_key": "home_view",
+    "values": {
+      "welcome_back": "Welcome Back,",
+      "highlights_the_week": "🔥 Highlights of the week",
+      "books_the_day": "Books Of The Day",
+      "categories": "Categories",
+      "for_you": "For you",
+      "new_arrivals": "New Arrivals",
+      "collections_for_you": "Collections for you",
+      "popular": "Popular",
+      "recommended": "Recommended",
+      "billionaires_book_list": "Billionaires book list"
+    }
+  },
+  {
+    "file_title": "Verification View",
+    "file_key": "verification_view",
+    "values": {
+      "forgot_password": "Forgot Password",
+      "create_new_password": "Create a new strong password",
+      "enter_have_email": "Enter verification code we have send to your email ",
+      "usernameemailcom": "username@email.com",
+      "2222": "2222",
+      "pin_is_incorrect": "Pin is incorrect",
+      "oncompleted_pin": "onCompleted: $pin",
+      "didnt_receive_code": "Didn't receive code?",
+      "resend": "Resend",
+      "next": "Next"
+    }
+  },
+  {
+    "file_title": "Forgot Password View",
+    "file_key": "forgot_password_view",
+    "values": {
+      "forgot_password": "Forgot Password",
+      "to_your_authenticated": "To reset your password, you need your email that can be authenticated",
+      "send_link": "Send Link",
+      "back_to_login": "Back to Login"
+    }
+  },
+  {
+    "file_title": "Login View",
+    "file_key": "login_view",
+    "values": {
+      "login_get_started": "Login to Get Started",
+      "forgot_your_password": "Forgot your password?",
+      "reset": "Reset",
+      "login": "Login",
+      "an_for_reason": "An error occurred for no reason"
+    }
+  },
+  {
+    "file_title": "Create New Password View",
+    "file_key": "create_new_password_view",
+    "values": {
+      "reset_password": "Reset Password",
+      "create_new_password": "Create a new strong password",
+      "save": "Save"
+    }
+  },
+  {
+    "file_title": "Select Category View",
+    "file_key": "select_category_view",
+    "values": {
+      "go_home": "Go Home",
+      "select_categories": "Select Categories",
+      "which_you_read": "Which type of books you want to read?",
+      "select_least_categories": "Select at least 3 categories"
+    }
+  },
+  {
+    "file_title": "Register View",
+    "file_key": "register_view",
+    "values": {
+      "sign_to_started": "Sign up to Get Started",
+      "sign_up": "Sign Up",
+      "you_accept_the": "You automatically accept the",
+      "user_data_agreement": "User Data Agreement"
+    }
+  },
+  {
+    "file_title": "Auth Bottom Sheet",
+    "file_key": "auth_bottom_sheet",
+    "values": {
+      "sign_in": "Sign In",
+      "sign_up": "Sign Up",
+      "sign_in_google": "Sign in Google",
+      "an_for_reason": "An error occurred for no reason",
+      "sign_in_apple": "Sign in Apple",
+      "you_to_account": "You must use an iOS device to log in with your Apple account"
+    }
+  },
+  {
+    "file_title": "User Data Agreement View",
+    "file_key": "user_data_agreement_view",
+    "values": {
+      "user_data_agreement": "User Data Agreement"
+    }
+  },
+  {
+    "file_title": "Somo Search Book Detail View",
+    "file_key": "somo_search_book_detail_view",
+    "values": {
+      "we_summary_you": "We are preparing the special summary of the book for you",
+      "this_more_minute": "This process may take more than a minute",
+      "whats_it_about": "What's it about?",
+      "chapters": "Chapters",
+      "about_the_writer": "About the Writer"
+    }
+  },
+  {
+    "file_title": "Somo Chat View",
+    "file_key": "somo_chat_view",
+    "values": {
+      "chat_somo_ai": "Chat with Somo AI",
+      "select_a_book": "Select a book...",
+      "hey_am_ai": "Hey, I am Somo AI!",
+      "first_then_go": "First choose a book, and then select a prompt! Let's Go 🚀"
+    }
+  },
+  {
+    "file_title": "Finished Books View",
+    "file_key": "finished_books_view",
+    "values": {
+      "finished_books": "Finished Books",
+      "no_book_yet": "No finished book yet"
+    }
+  },
+  {
+    "file_title": "Highlights View",
+    "file_key": "highlights_view",
+    "values": {
+      "highlights": "Highlights",
+      "loading": "Loading...",
+      "no_highlights_yet": "No highlights yet"
+    }
+  },
+  {
+    "file_title": "Library View",
+    "file_key": "library_view",
+    "values": {
+      "highlights": "Highlights",
+      "finished_books": "Finished Books",
+      "library": "Library",
+      "search_book_here": "Search Book here.."
+    }
+  },
+  {
+    "file_title": "Book Highlights Card View",
+    "file_key": "book_highlights_card_view",
+    "values": {
+      "highlights": "Highlights",
+      "edison": "Edison",
+      "read_book": "Read Book",
+      "listen_book": "Listen Book"
+    }
+  },
+  {
+    "file_title": "Listen Book View",
+    "file_key": "listen_book_view",
+    "values": {
+      "books": "Books",
+      "listen_book_view": "Listen Book View",
+      "unknown": "Unknown"
+    }
+  },
+  {
+    "file_title": "Book Highlights List View",
+    "file_key": "book_highlights_list_view",
+    "values": {
+      "books": "Books",
+      "book_list_view": "Book Highlights List View",
+      "highlight_detail": "Highlight Detail",
+      "highlights": "Highlights"
+    }
+  },
+  {
+    "file_title": "Read Book View",
+    "file_key": "read_book_view",
+    "values": {
+      "highlight": "Highlight",
+      "readsomo_so_more": "Readsomo: Read So More",
+      "share": "Share",
+      "readsomo_some_more": "Readsomo: Read Some More"
+    }
+  },
+  {
+    "file_title": "Finish And Rate Book View",
+    "file_key": "finish_and_rate_book_view",
+    "values": {
+      "how_the_book": "How was the book?",
+      "submit": "Submit",
+      "we_your_you": "We have received your feedback. Thank you!",
+      "see_also": "See also"
+    }
+  },
+  {
+    "file_title": "Increase Strike View",
+    "file_key": "increase_strike_view",
+    "values": {
+      "book_name": "Book Name"
+    }
+  },
+  {
+    "file_title": "Book Detail View",
+    "file_key": "book_detail_view",
+    "values": {
+      "books": "Books",
+      "book_detail_view": "Book Detail View",
+      "share": "Share",
+      "appconstantlink_n_booksnotifierreadingbookmodeldescription": "${AppConstant.link} \\n ${booksNotifier.readingBookModel!.name} \\n \\n ${booksNotifier.readingBookModel!.description}",
+      "unfavorite": "Unfavorite",
+      "favorite": "Favorite",
+      "whats_it_about": "What's it about?",
+      "chapters": "Chapters",
+      "about_booksnotifierreadingbookmodelwriter": "About ${booksNotifier.readingBookModel!.writer}",
+      "listen_now": "Listen Now",
+      "read_book_view": "Read Book View",
+      "bookid": "book_id",
+      "bookname": "book_name"
+    }
+  },
+  {
+    "file_title": "Browse Book View",
+    "file_key": "browse_book_view",
+    "values": {
+      "books": "Books",
+      "browse_view": "Browse View",
+      "all": "all",
+      "browse": "Browse",
+      "search_all_books": "Search in all books..."
+    }
+  },
+  {
+    "file_title": "Favorite Book View",
+    "file_key": "favorite_book_view",
+    "values": {
+      "your_favorites": "Your Favorites"
+    }
+  },
+  {
+    "file_title": "Profile View",
+    "file_key": "profile_view",
+    "values": {
+      "": "📚",
+      "berat": "Berat",
+      "kurt": "Kurt",
+      "hi_userproviderusermodelname": "Hi, ${userProvider.userModel!.name}",
+      "notifierfinishedbookslength_book": "${notifier.finishedBooks.length} Book",
+      "finished": "Finished",
+      "✨": "✨",
+      "notifierhighlightedbookslength_book": "${notifier.highlightedBooks.length} Book",
+      "highlighted": "Highlighted",
+      "join_discord": "Join Discord",
+      "finished_books": "Finished Books",
+      "favorite_books": "Favorite Books",
+      "saved_books": "Saved Books",
+      "settings": "Settings",
+      "switch_dark_mode": "Switch Dark Mode",
+      "switch_light_mode": "Switch Light Mode"
+    }
+  },
+  {
+    "file_title": "Choose Avatar View",
+    "file_key": "choose_avatar_view",
+    "values": {
+      "choose_that_you": "Choose the Avatar that Reflects You",
+      "remember_unique_✨": "Remember, no one is unique like you are ✨",
+      "cancel": "CANCEL"
+    }
+  },
+  {
+    "file_title": "No Connection View",
+    "file_key": "no_connection_view",
+    "values": {
+      "no_internet_connection": "No Internet connection!",
+      "please_you_internet": "Please check your internet connection to access Readsomo and enjoy the books. You will be able to continue using Readsomo when connected to the internet.",
+      "open_saved_books": "Open Saved Books"
+    }
+  },
+  {
+    "file_title": "Collection Card",
+    "file_key": "collection_card",
+    "values": {
+      "collectionbooklength_books": "${collection.bookLength} Books"
+    }
+  },
+  {
+    "file_title": "Book Collection Detail View",
+    "file_key": "book_collection_detail_view",
+    "values": {
+      "book_collections": "Book Collections",
+      "book_collection_detail": "Book Collection Detail",
+      "widgetcollectionbooklength_books": "${widget.collection.bookLength} books"
+    }
+  },
+  {
+    "file_title": "Maintenance View",
+    "file_key": "maintenance_view",
+    "values": {
+      "we_are_developping": "We are developping!",
+      "we_a_want": "We maintain the Readsomo project. This process may take a while. You can refresh the page if you want",
+      "refresh": "Refresh"
+    }
+  },
+  {
+    "file_title": "Select Interests View",
+    "file_key": "select_interests_view",
+    "values": {
+      "what_your_interests": "What are your interests?",
+      "change_precise_interests": "Change up goals for more precise personalization. Select maximum 3 interests.",
+      "continue": "Continue"
+    }
+  },
+  {
+    "file_title": "Strlike Info Card",
+    "file_key": "strlike_info_card",
+    "values": {
+      "start_your_strike": "🔥 Start your strike!",
+      "1_per_day": "1 book per a day",
+      "notifierstrikecount_day_strike": "🔥 ${notifier.strikeCount} Day Strike"
+    }
+  },
+  {
+    "file_title": "Get Premium Button",
+    "file_key": "get_premium_button",
+    "values": {
+      "get_premium": "Get Premium"
+    }
+  },
+  {
+    "file_title": "Get Premium View",
+    "file_key": "get_premium_view",
+    "values": {
+      "unlock_with_today": "Unlock the full app with %50 off today",
+      "unlimited_to_books": "Unlimited access to all books",
+      "chat_somo_ai": "Chat with Somo AI",
+      "new_coming_soon": "New features coming soon",
+      "privacy_policy": "Privacy Policy",
+      "restore_purchase": "Restore Purchase"
+    }
+  },
+  {
+    "file_title": "Page Controller View",
+    "file_key": "page_controller_view",
+    "values": {
+      "error_data_error": "Error initializing data: $error"
+    }
+  },
+  {
+    "file_title": "Initializing View",
+    "file_key": "initializing_view",
+    "values": {
+      "new_are_updated…": "New books are being updated…",
+      "fetching_new_summaries…": "Fetching new summaries…",
+      "curating_books_you…": "Curating the finest books for you…",
+      "the_may_while…": "The first boot may take a while…",
+      "just_reads_way…": "Just a moment, great reads are on the way…"
+    }
+  },
+  {
+    "file_title": "Saved Books View",
+    "file_key": "saved_books_view",
+    "values": {
+      "saved_books": "Saved Books"
+    }
+  },
+  {
+    "file_title": "Saved Book Detail View",
+    "file_key": "saved_book_detail_view",
+    "values": {
+      "saved_books": "Saved Books",
+      "saved_detail_view": "Saved Book Detail View",
+      "whats_it_about": "What's it about?",
+      "chapters": "Chapters",
+      "about_savedbooksnotifierreadingbookmodelwriter": "About ${savedBooksNotifier.readingBookModel!.writer}",
+      "listen_now": "Listen Now",
+      "books": "Books",
+      "read_book_view": "Read Book View",
+      "bookid": "book_id",
+      "bookname": "book_name"
+    }
+  },
+  {
+    "file_title": "Listen Saved Book View",
+    "file_key": "listen_saved_book_view",
+    "values": {
+      "books": "Books",
+      "listen_book_view": "Listen Book View"
+    }
+  },
+  {
+    "file_title": "Custom Story Page View",
+    "file_key": "custom_story_page_view",
+    "values": {
+      "story": "Story",
+      "custom_story_page": "Custom Story Page",
+      "preview": "Preview",
+      "readsomo": "READSOMO",
+      "continue": "Continue",
+      "share": "Share",
+      "stories": "Stories",
+      "highlight": "Highlight"
+    }
+  },
+  {
+    "file_title": "Onboarding View",
+    "file_key": "onboarding_view",
+    "values": {
+      "welcome": "Welcome ",
+      "to_readsomo": "to Readsomo",
+      "read_of_summaries": "Read or listen hundreds of non-fiction book summaries.",
+      "learn": "Learn",
+      "grow_succeed": ", Grow, Succeed",
+      "for_and_lovers": "For entrepreneurs, success addicts and personal development lovers.",
+      "enjoy_learning_with": "Enjoy learning with ",
+      "readsomo": "Readsomo!",
+      "highlight_quotes_experience": "Highlight your favourite sentences and quotes for better learning experience"
+    }
+  }
+]

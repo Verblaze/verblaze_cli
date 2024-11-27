@@ -6,7 +6,7 @@ import click
 from termcolor import colored
 
 from .api import API
-from .display_utils import loading_animation, print_ascii_art
+from .display_utils import loading_animation, print_ascii_art, loading_animation_context
 from .file_utils import get_actual_path, list_all_files_in_directory
 from .string_extractor_utils import get_string_extractor
 from .string_utils import format_as_json
@@ -49,7 +49,10 @@ async def send_translations(secret_key, translations):
         print(colored("Strings could not be synchronized in the verblaze panel.", "red"))
         sys.exit()
 
+VERSION = "0.0.2"
+
 @click.group()
+@click.version_option(VERSION, '-v', '--version', message='Verblaze CLI v%(version)s')
 def main():
     """Verblaze: Auto-Localization Generation Tool"""
     pass
@@ -86,7 +89,15 @@ def generate(t, d, f):
     folders = [folder.strip() for folder in f.split(",")]
     actual_path = get_actual_path(selected_template)
     search_path = os.path.join(project_dir, actual_path)
+    
+    print(colored(f"\nSearching in: {search_path}", "cyan"))
     file_list = list_all_files_in_directory(search_path, selected_template, folders)
+
+    if not file_list:
+        print(colored("\nNo files found!", "yellow"))
+        sys.exit(1)
+        
+    print(colored(f"\nNumber of files found: {len(file_list)}", "cyan"))
     file_path_and_strings = []
 
     for file_path in file_list:
@@ -96,13 +107,16 @@ def generate(t, d, f):
             file_path_and_strings.append((file_path, strings))
 
     if not file_path_and_strings:
-        print(colored("No strings found to extract.", "yellow"))
-        sys.exit()
+        print(colored("\nNo strings found.", "yellow"))
+        sys.exit(1)
         
     formatted_data = format_as_json(file_path_and_strings)
     secret_key = open(".env", "r").read().split("\n")[0].split("=")[1]
-    asyncio.run(send_translations(secret_key, json.loads(formatted_data)))
-    print(colored(f"\n\nStrings are syncronized in Verblaze dashboard", "green"))
+    
+    print(colored("\nStrings are being synchronized. This process may take up to 1 minute...", "yellow"))
+    with loading_animation_context():
+        asyncio.run(send_translations(secret_key, json.loads(formatted_data)))    
+    print(colored(f"\n\nStrings successfully synchronized to Verblaze dashboard!", "green"))
 
 
 # config komutu (tek seferde tanımlandı)

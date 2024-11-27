@@ -9,8 +9,8 @@ def get_actual_path(template: str):
     """
     actual_paths = {
         "flutter": "lib",
-        "react": "src",
-        "react-native": "src",
+        "react": "",
+        "react-native": "",
         "angular": "src/app",
         "plain-html": "",
         "vue": "src",
@@ -23,7 +23,7 @@ def get_actual_path(template: str):
         "wpf": "src",
         "qt": "src",
         "blazor": "Pages",
-        "nextjs": "pages",
+        "nextjs": "",
     }
     return actual_paths.get(template, "")
 
@@ -41,8 +41,8 @@ def get_file_extension_from_template(template: str):
         "svelte": ("svelte",),
         "ember": ("js", "hbs"),
         "backbone": ("js",),
-        "swift": ("swift",),
-        "kotlin": ("kt",),
+        "swift": ("swift", "storyboard", "xib"),
+        "kotlin": ("kt", "xml"),
         "javafx": ("java", "fxml"),
         "wpf": ("xaml",),
         "qt": ("qml",),
@@ -62,14 +62,13 @@ def list_all_files_in_directory(dir_path: str, template: str, folders: list):
     all_files = []
 
     for root, dirs, files in os.walk(dir_path):
-        # Get the current folder name
         current_folder = os.path.basename(root)
+        parent_folder = os.path.basename(os.path.dirname(root))
 
-        # If current_folder is in the list of folders, check files
-        if current_folder in folders:
+        # Ana dizindeki dosyaları veya belirtilen klasörlerdeki dosyaları kontrol et
+        if current_folder in folders or parent_folder in folders or root == dir_path:
             for file in files:
                 if file.endswith(tuple(f".{ext}" for ext in valid_file_extensions)):
-                    # Add the full file path
                     file_path = os.path.join(root, file)
                     all_files.append(file_path)
     return all_files

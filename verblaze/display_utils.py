@@ -3,6 +3,8 @@
 import os
 import sys
 import time
+from contextlib import contextmanager
+import threading
 
 def colored_custom(text, r, g, b):
     """
@@ -37,3 +39,34 @@ def loading_animation():
         sys.stdout.flush()
         time.sleep(0.5)
     sys.stdout.write('\n')
+    
+def async_loading_animation():
+    """
+    Displays a continuous loading animation with a spinning cursor.
+    """
+    spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+    message = "Synchronizing strings.."
+    try:
+        i = 0
+        while True:
+            sys.stdout.write('\r' + colored_custom(f"{message} {spinner[i]}", 79, 70, 229))
+            sys.stdout.flush()
+            time.sleep(0.1)
+            i = (i + 1) % len(spinner)
+    except KeyboardInterrupt:
+        sys.stdout.write('\r')
+        sys.stdout.flush()
+
+@contextmanager
+def loading_animation_context():
+    """
+    Context manager for the loading animation.
+    """
+    animation_thread = threading.Thread(target=async_loading_animation)
+    animation_thread.daemon = True
+    try:
+        animation_thread.start()
+        yield
+    finally:
+        sys.stdout.write('\r' + ' ' * 50 + '\r')  # Clear the line
+        sys.stdout.flush()
