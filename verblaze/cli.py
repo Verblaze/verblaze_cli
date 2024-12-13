@@ -5,6 +5,8 @@ import sys
 import click
 from termcolor import colored
 
+from verblaze.arb_utils import process_arb_files
+
 from .api import API
 from .display_utils import loading_animation, print_ascii_art, loading_animation_context
 from .file_utils import get_actual_path, list_all_files_in_directory
@@ -133,6 +135,39 @@ def config(secret_key):
     """
     # asyncio ile async fonksiyonunu çalıştırıyoruz
     asyncio.run(handle_config(secret_key))
+
+
+@main.command()
+@click.option(
+    "-p",
+    "--path",
+    type=str,
+    required=True,
+    help="Path to the ARB file"
+)
+def import_arb(path):
+    """
+    Import translations from an ARB file and sync with Verblaze.
+    """
+    print_ascii_art()
+    
+    if not os.path.exists(path):
+        print(colored("\nSpecified file does not exist!", "red"))
+        sys.exit(1)
+        
+    try:
+        secret_key = open(".env", "r").read().split("\n")[0].split("=")[1]
+    except:
+        print(colored("CLI Secret Token is required. Please use 'verblaze config --secret-key' first.", "yellow"))
+        sys.exit(1)
+        
+    print(colored("\nProcessing ARB file...", "cyan"))
+    with loading_animation_context():
+        arb_data = process_arb_files(path)
+        if arb_data:
+            asyncio.run(send_translations(secret_key, json.loads(arb_data)))
+    
+    print(colored(f"\n\nARB translations successfully synchronized to Verblaze dashboard!", "green"))
 
 
 if __name__ == "__main__":

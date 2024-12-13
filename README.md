@@ -1,4 +1,6 @@
-# Verblaze
+<a href="https://verblaze.com">
+  <img src="logo.png" alt="Verblaze Logo" width="300"/>
+</a>
 
 Verblaze is an automatic localization generation tool that helps you manage and generate translations for your projects.
 
@@ -90,6 +92,13 @@ A: Python 3.6 and above are supported.
 A: Yes, Verblaze supports multiple frameworks and can be integrated with existing projects.
 
 ## Changelog
+
+### [0.0.4] - 2024-11-27
+
+- Added loading animation during string synchronization
+- Fixed regex pattern for Flutter string extraction
+- Improved user feedback during synchronization process
+- Updated documentation and README
 
 ### [0.0.1] - 2024-11-20
 
