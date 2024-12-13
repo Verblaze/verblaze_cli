@@ -20,3 +20,27 @@ class API:
             return True
         else: 
             return False
+        
+    @staticmethod
+    async def import_language(secret_key, language_code, content):
+        """
+        Import language translations from JSON or ARB file
+        """
+        url = f"{API.BASE_URL}/api/cli/importLanguage"
+        payload = {
+            "languageCode": language_code,
+            "content": json.dumps(content),
+            "format": "json"
+        }
+        
+        response =  requests.post(
+            url,
+            headers={"Authorization": "Bearer " + secret_key},
+            json=payload
+        )
+        
+        if response.status_code == 200:
+            return True, None
+        else:
+            error_message = response.json().get('message', 'Unknown error occurred')
+            return False, error_message

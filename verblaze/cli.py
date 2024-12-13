@@ -5,7 +5,7 @@ import sys
 import click
 from termcolor import colored
 
-from verblaze.arb_utils import process_arb_files
+from verblaze.translation_utils import process_translation_file
 
 from .api import API
 from .display_utils import loading_animation, print_ascii_art, loading_animation_context
@@ -143,16 +143,32 @@ def config(secret_key):
     "--path",
     type=str,
     required=True,
-    help="Path to the ARB file"
+    help="Path to the translation file (JSON or ARB)"
 )
-def import_arb(path):
+@click.option(
+    "--language",
+    type=str,
+    required=True,
+    help="Language code (e.g., en, tr, es)"
+)
+@click.option(
+    "--format",
+    type=click.Choice(['json', 'arb']),
+    required=True,
+    help="File format (json or arb)"
+)
+def import_translations(path, language, format):
     """
-    Import translations from an ARB file and sync with Verblaze.
+    Import translations from a JSON or ARB file and sync with Verblaze.
     """
     print_ascii_art()
     
     if not os.path.exists(path):
         print(colored("\nSpecified file does not exist!", "red"))
+        sys.exit(1)
+        
+    if not path.endswith(f'.{format}'):
+        print(colored(f"\nFile must have .{format} extension!", "red"))
         sys.exit(1)
         
     try:
@@ -161,13 +177,20 @@ def import_arb(path):
         print(colored("CLI Secret Token is required. Please use 'verblaze config --secret-key' first.", "yellow"))
         sys.exit(1)
         
-    print(colored("\nProcessing ARB file...", "cyan"))
+    print(colored(f"\nProcessing {format.upper()} file...", "cyan"))
     with loading_animation_context():
-        arb_data = process_arb_files(path)
-        if arb_data:
-            asyncio.run(send_translations(secret_key, json.loads(arb_data)))
-    
-    print(colored(f"\n\nARB translations successfully synchronized to Verblaze dashboard!", "green"))
+        try:
+            content = process_translation_file(path, format)
+            if content:
+                success, error_message = asyncio.run(API.import_language(secret_key, language, content))
+                if success:
+                    print(colored(f"\n\nTranslations successfully synchronized to Verblaze dashboard!", "green"))
+                else:
+                    print(colored(f"\nFailed to synchronize translations: {error_message}", "red"))
+                    sys.exit(1)
+        except Exception as e:
+            print(colored(f"\nError during import: {e}", "red"))
+            sys.exit(1)
 
 
 if __name__ == "__main__":
