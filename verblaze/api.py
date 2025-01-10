@@ -3,7 +3,7 @@ import requests
 
     
 class API:
-    BASE_URL = "https://api.verblaze.com"
+    BASE_URL = "http://localhost:4000" # TODO: change to https://api.verblaze.com
     
     async def checkCLISecret(cli_secret: str) -> bool:
         url = f"{API.BASE_URL}/api/cli/checkCLISecret"
@@ -44,3 +44,15 @@ class API:
         else:
             error_message = response.json().get('message', 'Unknown error occurred')
             return False, error_message
+        
+    async def generate_keys(secret_key:str, values:list[str]) -> dict:
+        url = f"{API.BASE_URL}/api/cli/generateKeys"
+        headers = {"Authorization": "Bearer " + secret_key}
+        response = requests.post(url, json={"values": values}, headers=headers)
+        
+        if response.status_code == 200:
+            return response.json()["values"]
+        else:
+            error_message = response.json().get('message', 'Unknown error occurred')
+            raise Exception(error_message)
+        

@@ -2,13 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='verblaze',
-    version='0.0.4',
+    version='1.0.3',
     author="3K",
     author_email="support@verblaze.com",
     packages=find_packages(),
     install_requires=[
         "click",
         "termcolor",
+        "requests",
+        "unidecode",
     ],
     description='Auto-Localization Generation Tool',
     long_description=open('README.md').read(),

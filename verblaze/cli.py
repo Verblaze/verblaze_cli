@@ -51,7 +51,7 @@ async def send_translations(secret_key, translations):
         print(colored("Strings could not be synchronized in the verblaze panel.", "red"))
         sys.exit()
 
-VERSION = "0.0.2"
+VERSION = "1.0.2"
 
 @click.group()
 @click.version_option(VERSION, '-v', '--version', message='Verblaze CLI v%(version)s')
@@ -100,6 +100,7 @@ def generate(t, d, f):
         sys.exit(1)
         
     print(colored(f"\nNumber of files found: {len(file_list)}", "cyan"))
+    print(colored(f"\nGenerating keys... This process may take up to 1-10 minutes...", "yellow"))
     file_path_and_strings = []
 
     for file_path in file_list:
@@ -112,8 +113,8 @@ def generate(t, d, f):
         print(colored("\nNo strings found.", "yellow"))
         sys.exit(1)
         
-    formatted_data = format_as_json(file_path_and_strings)
     secret_key = open(".env", "r").read().split("\n")[0].split("=")[1]
+    formatted_data = format_as_json(file_path_and_strings, secret_key)
     
     print(colored("\nStrings are being synchronized. This process may take up to 1 minute...", "yellow"))
     with loading_animation_context():

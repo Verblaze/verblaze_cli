@@ -4,7 +4,10 @@ import re
 import json
 import os
 import string
+from termcolor import colored
 from unidecode import unidecode
+import asyncio
+from .api import API
 
 def remove_emojis_and_punctuation(text):
     """
@@ -28,34 +31,27 @@ def remove_emojis_and_punctuation(text):
 
     return no_emoji.strip()
 
-def format_as_json(file_path_and_strings: list) -> str:
+def format_as_json(file_path_and_strings: list, secret_key:str) -> str:
     """
     Formats the extracted strings into a JSON structure.
     """
     data = []
+
     for file_path, strings in file_path_and_strings:
         basename = os.path.basename(file_path)
         # First characters should be uppercase, e.g., "Settings Screen"
         file_title = (basename.split(".")[0].replace("_", " ")).title()
         file_key = unidecode(file_title).replace(" ", "_").lower()
-        # file_key has contains english characters only
         
-        # Generate a key for every string value and create "values" dict
-        values = {}
-        for string in strings:
-            key = ""
-            cleaned_text = remove_emojis_and_punctuation(string)
-            words = cleaned_text.split()
-            # If string has more than 3 words, key will be first, middle, and last word
-            if len(words) >= 3:
-                middle_word = words[len(words) // 2]
-                key = (words[0] + "_" + middle_word + "_" + words[-1]).lower()
-            elif len(words) == 2:
-                key = (words[0] + "_" + words[1]).lower()
-            else:
-                key = cleaned_text.lower()
-            key = key.replace(" ", "_")
-            values[key] = string
+        # API'yi kullanarak string'ler için key'leri oluştur
+        try:
+            values = asyncio.run(API.generate_keys(secret_key, strings))
+            print(colored(f"Keys generated for {file_title}", "green"))
+        except Exception as e:
+            print(f"Error occurred while generating keys: {str(e)}")
+            continue
+
         if values:
-            data.append({"file_title": file_title, "file_key" : file_key, "values": values})
+            data.append({"file_title": file_title, "file_key": file_key, "values": values})
+            
     return json.dumps(data, ensure_ascii=False, indent=2)
