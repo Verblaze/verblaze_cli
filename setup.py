@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='verblaze',
-    version='1.0.3',
+    version='1.0.4',
     author="3K",
     author_email="support@verblaze.com",
     packages=find_packages(),

@@ -3,7 +3,7 @@ import requests
 
     
 class API:
-    BASE_URL = "http://localhost:4000" # TODO: change to https://api.verblaze.com
+    BASE_URL = "https://api.verblaze.com" # TODO: change to https://api.verblaze.com
     
     async def checkCLISecret(cli_secret: str) -> bool:
         url = f"{API.BASE_URL}/api/cli/checkCLISecret"
